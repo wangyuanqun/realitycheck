@@ -1,10 +1,5 @@
 package realitycheck.gui;
 
-/**
- * @author Yuanqun Wang -> View and approve applicant
- * @author Allan Xie -> verify/reject channels
- */
-
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.MouseAdapter;
@@ -27,15 +22,15 @@ import javax.swing.JButton;
 public class ExpertHome extends JFrame {
 
 	private JPanel contentPane;
-	
+
 	private ApplicantRepo applicantRepo;
-	
+
 	private ApplicationRepo applicationRepo;
-	
+
 	private ChannelRepo channelRepo;
-	
+
 	private ExpertRepo expertRepo;
-	
+
 	private Expert expert;
 
 	/**
@@ -47,17 +42,16 @@ public class ExpertHome extends JFrame {
 		this.applicationRepo = applicationRepo;
 		this.channelRepo = channelRepo;
 		this.expertRepo = expertRepo;
-		
-		
+
+
 		setTitle("ExpertHome");
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 324, 182);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		
-		// Yuanqun Wang
+
 		JButton viewApplicationButton = new JButton("View Applications");
 		viewApplicationButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -68,8 +62,7 @@ public class ExpertHome extends JFrame {
 				va.setVisible(true);
 			}
 		});
-		
-		// Allan Xie
+
 		JButton viewNominationButton = new JButton("View Nominations");
 		viewNominationButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -80,8 +73,8 @@ public class ExpertHome extends JFrame {
 				vn.setVisible(true);
 			}
 		});
-		
-		
+
+
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)

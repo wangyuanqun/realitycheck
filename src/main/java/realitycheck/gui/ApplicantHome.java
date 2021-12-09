@@ -1,8 +1,4 @@
 package realitycheck.gui;
-/**
- * @author Yuanqun Wang
-
- */
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.MouseAdapter;
@@ -42,45 +38,45 @@ public class ApplicantHome extends JFrame {
 	public ApplicantHome(String applicantName, ApplicationRepo applicationRepo) {
 		this.applicantName = applicantName;
 		this.applicationRepo = applicationRepo;
-		
+
 		setTitle("Applicant Home");
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 535, 378);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		
+
 		JLabel categoryLabel = new JLabel("Please select the categories that you want to apply for:");
-		
+
 		climateButton = new JButton("Climate");
-		
+
 		covidButton = new JButton("Covid19");
-		
+
 		politicalButton = new JButton("Political");
-		
+
 		religiousButton = new JButton("ReligiousExtremism");
-		
+
 		racialButton = new JButton("RacialRrejudice");
-		
+
 		//add listeners to all the buttons
 		List<JButton> btnlist = new ArrayList<>(Arrays.asList(climateButton, covidButton, politicalButton, religiousButton, racialButton));
-		
+
 		for(JButton btn : btnlist) {
 			btn.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					// create a new window to collect the information of application
-					
+
 					ApplicationHome ah = new ApplicationHome(btn, applicantName, applicationRepo);
 					ah.pack();
 					ah.setVisible(true);
-					
+
 					btn.setEnabled(false);
 				}
 			});
 		}
-		
+
 		// close the window
 		JButton closeButton = new JButton("Close");
 		closeButton.addMouseListener(new MouseAdapter() {
@@ -89,7 +85,7 @@ public class ApplicantHome extends JFrame {
 				dispose();
 			}
 		});
-		
+
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)

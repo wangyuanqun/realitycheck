@@ -20,26 +20,22 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
-/**
- * 
- * @author Yuanqun Wang
- *
- */
+
 public class ApplicationHome extends JDialog {
-	
+
 	// define the format of the email address
 	private final String EMAIL_REGEX = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
 
 	private final JPanel contentPanel = new JPanel();
-	
+
 	private ApplicationRepo applicationRepo;
-	
+
 	private String applicantName;
-	
+
 	private JButton categoryBtn;
 	private JTextField emailField;
 	private JTextField linkField;
-	
+
 	/**
 	 * Create the dialog.
 	 */
@@ -47,13 +43,13 @@ public class ApplicationHome extends JDialog {
 		this.applicantName = applicantName;
 		this.applicationRepo = applicationRepo;
 		this.categoryBtn = categoryBtn;
-		
-		
+
+
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		
+
 		JLabel categoryLabel = new JLabel("You are applying for " + this.categoryBtn.getText() + ":");
 		JLabel linkLabel = new JLabel("A link that describes your relevant expertise:");
 		linkField = new JTextField();
@@ -61,8 +57,8 @@ public class ApplicationHome extends JDialog {
 		JLabel emailLabel = new JLabel("An Email to contact the institution:");
 		emailField = new JTextField();
 		emailField.setColumns(10);
-		
-		
+
+
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
 		gl_contentPanel.setHorizontalGroup(
 			gl_contentPanel.createParallelGroup(Alignment.LEADING)
@@ -112,13 +108,13 @@ public class ApplicationHome extends JDialog {
 					@Override
 					public void mouseClicked(MouseEvent e) {
 						// check if information is filled
-						
+
 						if(linkField.getText().isEmpty() || emailField.getText().isEmpty()) {
 							showMessageDialog(null, "You need to fill in your information to finish.", "Warning", ERROR_MESSAGE);
 						} else if(!(emailField.getText().matches(EMAIL_REGEX))) {
 							showMessageDialog(null, "Wrong format of email address.", "Warning", ERROR_MESSAGE);
 						} else {
-							
+
 							Category category = null;
 							switch(categoryBtn.getText()) {
 								case "Climate":
@@ -137,11 +133,11 @@ public class ApplicationHome extends JDialog {
 									category = Category.Racial_Prejudice;
 									break;
 							}
-							
+
 							applicationRepo.save(new Application(applicantName, category, linkField.getText(), emailField.getText()));
 							dispose();
 							categoryBtn.setEnabled(false);
-							
+
 							showMessageDialog(null, "You successfully created an application", "Message", INFORMATION_MESSAGE);
 						}
 					}
@@ -157,7 +153,7 @@ public class ApplicationHome extends JDialog {
 					public void mouseClicked(MouseEvent e) {
 						// enable the apply Button again
 						categoryBtn.setEnabled(true);
-						
+
 						dispose();
 					}
 				});

@@ -24,18 +24,14 @@ import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
-/**
- * 
- * @author Sichen Zhao
- *
- */
+
 public class VolunteerHome extends JFrame {
 
 	private JPanel contentPane;
 	private JButton nominateButton;
 	private JButton viewButton;
 	private JComboBox<String> channelComboBox;
-	
+
 	private ChannelRepo channelRepo;
 	private VideoRepo videoRepo;
 	private CommentRepo commentRepo;
@@ -49,15 +45,15 @@ public class VolunteerHome extends JFrame {
 		this.channelRepo = channelRepo;
 		this.videoRepo = videoRepo;
 		this.commentRepo = commentRepo;
-		
+
 		setTitle("Volunteer Home");
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 384, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		
+
 		nominateButton = new JButton("Nominate a Channel");
 		nominateButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -68,17 +64,17 @@ public class VolunteerHome extends JFrame {
 				no.setVisible(true);
 			}
 		});
-		
+
 		viewButton = new JButton("View Videos");
-		
+
 		channelComboBox = new JComboBox<>();
-		
+
 		JLabel selectChannelLabel = new JLabel("Please select a channel to view videos or vote channel:");
 		// only verified channel can be viewed
 		for(Channel ch : channelRepo.findByisVerified(true)) {
 			channelComboBox.addItem(ch.getchannelName());
 		}
-		
+
 		viewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -89,11 +85,11 @@ public class VolunteerHome extends JFrame {
 					ViewVideo vv = new ViewVideo(channelComboBox.getSelectedItem().toString(), videoRepo, commentRepo);
 					vv.pack();
 					vv.setVisible(true);
-					
+
 				}
 			}
 		});
-		
+
 		voteButton = new JButton("Vote Channel");
 		voteButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -109,8 +105,8 @@ public class VolunteerHome extends JFrame {
 				}
 			}
 		});
-		
-		
+
+
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)

@@ -1,13 +1,6 @@
 package realitycheck.gui;
-/**
- * @author Yuanqun Wang
- */
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
 import static javax.swing.JOptionPane.showMessageDialog;
-
-/**
- * @author Yuanqun Wang
- */
 
 import java.awt.BorderLayout;
 
@@ -44,13 +37,13 @@ import javax.swing.JButton;
 public class ViewApplication extends JFrame {
 
 	private JPanel contentPane;
-	
+
 	private ApplicantRepo applicantRepo;
-	
+
 	private ApplicationTableModel model;
-	
+
 	private ExpertRepo expertRepo;
-	
+
 	private ApplicationRepo applicationRepo;
 	private JComboBox<String> applicantComboBox;
 	private JTable table;
@@ -64,31 +57,31 @@ public class ViewApplication extends JFrame {
 		this.applicationRepo = applicationRepo;
 		this.model = new ApplicationTableModel();
 		this.expertRepo = expertRepo;
-		
-		
+
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		
+
 		applicantComboBox = new JComboBox<String>();
 		for(Applicant ap : applicantRepo.findAll()) {
 			applicantComboBox.addItem(ap.getUserName());
 		}
-		
-		
+
+
 		JLabel applicantLabel = new JLabel("Please select an applicant to view:");
-		
+
 		table = new JTable(model);
 		JScrollPane scrollPane = new JScrollPane(table);
 		table.setFillsViewportHeight(true);
-		
+
 		// if there is default value, then update the table
 		if(applicantComboBox.getSelectedItem() != null) {
 			model.refreshData(applicantComboBox.getSelectedItem().toString());
 		}
-		
+
 		// if an item is selected, then update the table
 		applicantComboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
@@ -98,7 +91,7 @@ public class ViewApplication extends JFrame {
 				}
 			}
 		});
-		
+
 		approveButton = new JButton("Approve");
 		// approve a selected application
 		approveButton.addMouseListener(new MouseAdapter() {
@@ -117,7 +110,7 @@ public class ViewApplication extends JFrame {
 						Application application = model.getApplicationAt(table.getSelectedRow());
 						application.approve();
 						applicationRepo.save(application);
-						
+
 						// if he is already an expert then add the category to his categories
 						if(applicantRepo.findByUserName(application.getApplicantName()) == null) {
 							Expert ex = expertRepo.findByUserName(application.getApplicantName());
@@ -170,54 +163,54 @@ public class ViewApplication extends JFrame {
 	 *
 	 */
 	private class ApplicationTableModel extends AbstractTableModel {
-		
+
 	    private String[] columnNames = {"Link", "Email Address"};
-	    
+
 	    private List<Application> rows = new ArrayList<>();
-	    
+
 	    public ApplicationTableModel() {
 	    }
 
 	    public void refreshData(String name) {
 	    	this.rows.clear();
-	    	
+
 	    	for (Application ap: applicationRepo.findByApplicantName(name)) {
 	    		this.rows.add(ap);
 	    	}
 	    }
-	    
+
 	    @Override
 	    public int getColumnCount() {
 	        return columnNames.length;
 	    }
-	    
+
 	    @Override
 	    public int getRowCount() {
 	        return rows.size();
 	    }
-	    
+
 	    @Override
 	    public Object getValueAt(int row, int col) {
-	    	
+
 	    	 Application application = rows.get(row) ;
-	    	
+
 	    	switch (col) {
 	    		case 0: return application.getLink();
 	    		case 1: return application.getInstitutionEmail();
 	    	}
-	    	
+
 	    	return null ;
-	    	
+
 	    }
-	    
+
 	    @Override
 	    public String getColumnName(int col) {
 	        return columnNames[col];
 	    }
-	    
+
 	    public Application getApplicationAt(int row) {
 	    	return rows.get(row);
 	    }
 	}
-	
+
 }

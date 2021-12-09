@@ -1,9 +1,5 @@
 package realitycheck.gui;
 
-/**
- * @author Yuanqun Wang
- */
-
 import static javax.swing.JOptionPane.*;
 
 import java.awt.event.ItemEvent;
@@ -37,7 +33,7 @@ import realitycheck.model.Volunteer;
 
 
 public class RealityCheck extends JFrame {
-	
+
 	// define the format of the email address
 	private final String EMAIL_REGEX = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
 
@@ -50,9 +46,9 @@ public class RealityCheck extends JFrame {
 	private JComboBox<UserType> userTypeComboBox;
 
 	private ApplicantRepo applicantRepo;
-	
+
 	private ApplicationRepo applicationRepo;
-	
+
 	private ChannelRepo channelRepo;
 
 	private ExpertRepo expertRepo;
@@ -62,9 +58,9 @@ public class RealityCheck extends JFrame {
 	private VolunteerRepo volunteerRepo;
 
 	private VideoRepo videoRepo;
-	
+
 	private CommentRepo commentRepo;
-	
+
 	private JLabel userEmailLabel;
 	private JTextField userEmailField;
 
@@ -73,7 +69,7 @@ public class RealityCheck extends JFrame {
 	 */
 	public RealityCheck(ApplicantRepo applicantRepo, ExpertRepo expertRepo, ModeratorRepo moderatorRepo, VolunteerRepo volunteerRepo,
 			ApplicationRepo applicationRepo, ChannelRepo channelRepo, VideoRepo videoRepo, CommentRepo commentRepo) {
-		
+
 		this.applicantRepo = applicantRepo;
 		this.expertRepo = expertRepo;
 		this.moderatorRepo = moderatorRepo;
@@ -81,35 +77,35 @@ public class RealityCheck extends JFrame {
 		this.applicationRepo = applicationRepo;
 		this.channelRepo = channelRepo;
 		this.videoRepo = videoRepo;
-		
+
 		setTitle("Log In");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		
-		
+
+
 		JLabel userNameLabel = new JLabel("User Name:");
-		
+
 		JLabel userPasswordLabel = new JLabel("User Password:");
-		
+
 		userNameField = new JTextField();
 		userNameField.setColumns(10);
-		
+
 		userPasswordField = new JPasswordField();
 		userPasswordField.setColumns(10);
-		
+
 		userTypeLabel = new JLabel("User Type:");
-		
+
 		userEmailLabel = new JLabel("User Email:");
-		
+
 		userEmailField = new JTextField();
 		userEmailField.setColumns(10);
-		
+
 		signInBtn = new JButton("Sign Up");
 		signInBtn.setEnabled(false);
-		
+
 		userTypeComboBox = new JComboBox<UserType>(UserType.values());
 		userTypeComboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
@@ -122,9 +118,9 @@ public class RealityCheck extends JFrame {
 				}
 			}
 		});
-		
+
 		logInBtn = new JButton("Log in");
-		
+
 		// if the textFields are empty throw a warning window
 		logInBtn.addMouseListener(new MouseAdapter() {
 			@Override
@@ -147,28 +143,28 @@ public class RealityCheck extends JFrame {
 									mo.pack();
 									mo.setVisible(true);
 									break;
-									
+
 								case Volunteer:
 									VolunteerHome vo = new VolunteerHome(channelRepo, videoRepo, commentRepo);
 									vo.pack();
 									vo.setVisible(true);
 									break;
-									
+
 								case Expert:
 									ExpertHome ex = new ExpertHome(expertRepo.findByUserName(userNameField.getText()), expertRepo, applicationRepo, applicantRepo, channelRepo);
 									ex.pack();
 									ex.setVisible(true);
-									
+
 									break;
-									
+
 								case Applicant:
 									ApplicantHome ap = new ApplicantHome(userNameField.getText(), applicationRepo);
 									ap.pack();
 									ap.setVisible(true);
-									
+
 									break;
 							}
-							
+
 						}
 					} else {
 						showMessageDialog(null, "Wrong format of email address.", "Warning", ERROR_MESSAGE);
@@ -176,7 +172,7 @@ public class RealityCheck extends JFrame {
 				}
 			}
 		});
-		
+
 		// if the textFields are empty throw a warning window
 		signInBtn.addMouseListener(new MouseAdapter() {
 			@Override
@@ -198,17 +194,17 @@ public class RealityCheck extends JFrame {
 										VolunteerHome vo = new VolunteerHome(channelRepo, videoRepo, commentRepo);
 										vo.pack();
 										vo.setVisible(true);
-										
+
 										break;
 									case Applicant:
 										applicantRepo.save(new Applicant(type, userNameField.getText(), userEmailField.getText(), userPasswordField.getText()));
 										ApplicantHome ap = new ApplicantHome(userNameField.getText(), applicationRepo);
 										ap.pack();
 										ap.setVisible(true);
-										
+
 										break;
 								}
-								
+
 							} else {
 								showMessageDialog(null, "Account already exists.", "Warning", ERROR_MESSAGE);
 							}
@@ -219,8 +215,8 @@ public class RealityCheck extends JFrame {
 				}
 			}
 		});
-		
-		
+
+
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -281,7 +277,7 @@ public class RealityCheck extends JFrame {
 		);
 		contentPane.setLayout(gl_contentPane);
 	}
-	
+
 	/**
 	 * To check if Inputs are empty.
 	 * @return if fields are empty, return true
@@ -292,14 +288,14 @@ public class RealityCheck extends JFrame {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * To check is account exists in the database.
 	 * @return if the account exists, return true, otherwise, return false.
 	 */
 	private boolean checkUser() {
 		UserType type = (UserType) userTypeComboBox.getSelectedItem();
-		
+
 		switch(type) {
 			case Moderator:
 				Moderator moderator = moderatorRepo.findByUserName(userNameField.getText());
@@ -330,7 +326,7 @@ public class RealityCheck extends JFrame {
 					}
 				}
 		}
-		
+
 		return false;
 	}
 }

@@ -1,9 +1,6 @@
 package realitycheck.gui;
 
 import static javax.swing.JOptionPane.ERROR_MESSAGE;
-/**
- * @author Allan Xie
- */
 import static javax.swing.JOptionPane.showMessageDialog;
 
 
@@ -39,16 +36,16 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 /**
- * 
+ *
  * @author Allan Xie
  *
  */
 public class ViewNomination extends JFrame {
 	private Expert expert;
 	private ChannelRepo channelRepo;
-	
+
 	private ChannelTableModel model;
-	
+
 	private JPanel contentPane;
 	private JTable table;
 	private JButton reviewButton;
@@ -57,26 +54,26 @@ public class ViewNomination extends JFrame {
 	private JComboBox<String> categoryComboBox;
 	private JScrollPane scrollPane;
 
-	
+
 	public ViewNomination(Expert expert, ChannelRepo channelRepo) {
 		this.expert = expert;
 		this.channelRepo = channelRepo;
 		this.model = new ChannelTableModel();
 		ViewNomination vn = this;
-		
+
 		categoryLabel = new JLabel("Select Category:");
 		applicantLabel = new JLabel("Please review the following nominations:");
 		scrollPane = new JScrollPane();
-		
+
 		//review the selected nomination
 		reviewButton = new JButton("Review");
 		reviewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				//if no nomination is selected, throw a warning
-				if(table.getSelectedRowCount() != 1) {	
+				if(table.getSelectedRowCount() != 1) {
 					showMessageDialog(null, "Please slect a row before approving.", "Warning", ERROR_MESSAGE);
-				} 
+				}
 				//otherwise, open review nomination window and display selected nomination details
 				else {
 					List<Category> commonCategories = new ArrayList<>(expert.getCategories());
@@ -94,11 +91,11 @@ public class ViewNomination extends JFrame {
 				}
 			}
 		});
-		
+
 		table = new JTable(model);
 		table.setFillsViewportHeight(true);
 		table.repaint();
-		
+
 		//add the options in the combo box
 		categoryComboBox = new JComboBox();
 		categoryComboBox.addItem("All");
@@ -106,22 +103,22 @@ public class ViewNomination extends JFrame {
 		for(Category c: Category.values()) {
 			categoryComboBox.addItem(c.toString());
 		}
-		
+
 		//whenever an option is selected, refresh table
 		categoryComboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Refresh();
 			}
 		});
-		
+
 		Refresh();
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		
+
 		//Swing Layout
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
@@ -163,27 +160,27 @@ public class ViewNomination extends JFrame {
 				.addComponent(reviewButton))
 		);
 		contentPane.setLayout(gl_contentPane);
-		
+
 	}
-	
-	
+
+
 //class to display table
 	private class ChannelTableModel extends AbstractTableModel {
-		
+
 	    private String[] columnNames = {"Channel Name", "Category", "Votes"};
-	    
+
 	    private ArrayList<Channel> rows = new ArrayList<>();
 	    private HashSet<Channel> allRows = new HashSet<>();
 	    public ChannelTableModel() {
 	    }
-	    
+
 	    //look at which category is selected in combo box to decide which channels to display
 	    public void refreshData(String selectedItem) {
 	    	rows = new ArrayList<>();
 	    	allRows = new HashSet<>();
-	    	
+
 	    	List<Category> selectedCategories = new ArrayList<>();
-	    	
+
 	    	//switch statement so that display channel matches category
 	    	switch(selectedItem) {
 	    		//display all channels
@@ -192,7 +189,7 @@ public class ViewNomination extends JFrame {
 	    				selectedCategories.add(c);
 	    			}
 	    			break;
-	    		
+
 	    		//display channels that matches the expert's category
 	    		case "Your Categories":
 	    			for(Category c: expert.getCategories()) {
@@ -204,24 +201,24 @@ public class ViewNomination extends JFrame {
 	    		case "Climate":
 	    			selectedCategories.add(Category.Climate);
 	    			break;
-	    			
+
 	    		case "Covid19":
 	    			selectedCategories.add(Category.Covid19);
 	    			break;
-	    			
+
 	    		case "Political":
 	    			selectedCategories.add(Category.Political);
 	    			break;
-	    			
+
 	    		case "Racial_Prejudice":
 	    			selectedCategories.add(Category.Racial_Prejudice);
 	    			break;
-	    			
+
 	    		case "Religious_Extremism":
 	    			selectedCategories.add(Category.Religious_Extremism);
 	    			break;
 	    	}
-	
+
 	    	//only display channel is channel has not been reviewed and matches selected category
 	    	for (Channel nom: channelRepo.findAll()) {
 	    		for(int i = 0; i < nom.getCategories().size(); i++) {
@@ -232,12 +229,12 @@ public class ViewNomination extends JFrame {
 	    			}
 	    		}
 	    	}
-	    	
+
 	    	//display by votes in descending order
 	    	rows = new ArrayList<>(allRows);
 	    	rows.sort(Comparator.comparingInt(Channel::getVotes).reversed());
 	    }
-	    
+
 	    public int getColumnCount() {
 	        return columnNames.length;
 	    }
@@ -251,17 +248,17 @@ public class ViewNomination extends JFrame {
 	    }
 
 	    public Object getValueAt(int row, int col) {
-	    	
+
 	    	 Channel nomination = rows.get(row) ;
-	    	
+
 	    	switch (col) {
 	    		case 0: return nomination.getchannelName();
 	    		case 1: return nomination.getCategories();
 	    		case 2: return nomination.getVotes();
 	    	}
-	    	
+
 	    	return null ;
-	    	
+
 	    }
 
 	    public Class getColumnClass(int col) {
@@ -270,15 +267,15 @@ public class ViewNomination extends JFrame {
 	    		case 1: return String.class ;
 	    		case 2: return String.class ;
 	    	}
-	    	
+
 	    	return null ;
     	}
-	    
+
 	    public Channel getChannelAt(int row) {
 	    	return rows.get(row);
 	    }
 	}
-	
+
 	//refreshes the table
 	public void Refresh() {
 		model.refreshData(categoryComboBox.getSelectedItem().toString());

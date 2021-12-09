@@ -1,7 +1,4 @@
 package realitycheck.gui;
-/**
- * @author Sichen Zhao
- */
 import static javax.swing.JOptionPane.INFORMATION_MESSAGE;
 import static javax.swing.JOptionPane.showMessageDialog;
 
@@ -30,7 +27,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 public class ModeratorHome extends JFrame {
 
 	private JPanel contentPane;
-	
+
 	private VolunteerRepo volunteerRepo;
 	private JComboBox<String> volunteerComboBox;
 	private JButton promoteButton;
@@ -43,21 +40,21 @@ public class ModeratorHome extends JFrame {
 	public ModeratorHome(VolunteerRepo volunteerRepo, ModeratorRepo moderatorRepo) {
 		this.volunteerRepo = volunteerRepo;
 		this.moderatorRepo = moderatorRepo;
-		
+
 		setTitle("Moderator Home");
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 325, 297);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		
+
 		JLabel volunteerLabel = new JLabel("Please select a volunteer to promote or ban:");
 		volunteerComboBox = new JComboBox<String>();
 		for(Volunteer vo : volunteerRepo.findAll()) {
 			volunteerComboBox.addItem(vo.getUserName());
 		}
-		
+
 		promoteButton = new JButton("Promote");
 		//add volunteer to moderator and delete him from volunteer
 		promoteButton.addMouseListener(new MouseAdapter() {
@@ -73,7 +70,7 @@ public class ModeratorHome extends JFrame {
 				showMessageDialog(null, "Successfully promoted an account", "Message", INFORMATION_MESSAGE);
 			}
 		});
-		
+
 		banButton = new JButton("Ban");
 		banButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -88,7 +85,7 @@ public class ModeratorHome extends JFrame {
 				showMessageDialog(null, "Successfully banned an account", "Message", INFORMATION_MESSAGE);
 			}
 		});
-		
+
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)

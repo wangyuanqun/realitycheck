@@ -28,15 +28,11 @@ import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JEditorPane;
 import javax.swing.JTextArea;
-/**
- * 
- * @author Yuesong Duan
- *
- */
+
 public class ViewVideo extends JFrame {
 
 	private JPanel contentPane;
-	
+
 	private VideoRepo videoRepo;
 	private CommentRepo commentRepo;
 	private JLabel selectLabel;
@@ -52,27 +48,27 @@ public class ViewVideo extends JFrame {
 	 * Create the frame.
 	 */
 	public ViewVideo(String channelName, VideoRepo videoRepo, CommentRepo commentRepo) {
-		
+
 		this.videoRepo = videoRepo;
 		this.commentRepo = commentRepo;
 		this.channelName = channelName;
-		
+
 		setTitle("View Video");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 305, 448);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		
+
 		selectLabel = new JLabel("Please select a video:");
-		
+
 		videoComboBox = new JComboBox<>();
 		for(Video vi : videoRepo.findAll()) {
 			if(vi.getChannelName().equals(channelName)) {
 				videoComboBox.addItem(vi.getVideoName());
 			}
 		}
-		
+
 		upVoteButton = new JButton("Up Vote");
 		upVoteButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -89,7 +85,7 @@ public class ViewVideo extends JFrame {
 				}
 			}
 		});
-		
+
 		downVoteButton = new JButton("Down Vote");
 		downVoteButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -103,13 +99,13 @@ public class ViewVideo extends JFrame {
 				}
 			}
 		});
-		
-		
-		
+
+
+
 		commentLabel = new JLabel("Please select a comment to view:");
-		
+
 		commentPane = new JEditorPane();
-		
+
 		commentComboBox = new JComboBox<>();
 		for(Comment co : commentRepo.findAll()) {
 			commentComboBox.addItem(co.getContent());
@@ -123,11 +119,11 @@ public class ViewVideo extends JFrame {
 				}
 			}
 		});
-		
+
 		JLabel suggestLabel = new JLabel("You can also suggest a comment yourself:");
-		
+
 		JEditorPane newCommentPane = new JEditorPane();
-		
+
 		JButton okButton = new JButton("OK");
 		okButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -141,7 +137,7 @@ public class ViewVideo extends JFrame {
 				}
 			}
 		});
-		
+
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)

@@ -31,11 +31,7 @@ import javax.swing.JButton;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
-/**
- * 
- * @author Allan Xie
- *
- */
+
 public class ReviewNomination extends JFrame {
 
 	private JPanel contentPane;
@@ -44,30 +40,30 @@ public class ReviewNomination extends JFrame {
 	private JEditorPane linkPane;
 	private JButton rejectButton;
 	private JButton approveButton;
-	
+
 	private ChannelRepo channelRepo;
 	private Channel channel;
 	private Expert expert;
 	private JButton copyButton;
 
 
-	
+
 	public ReviewNomination(ViewNomination vn, Expert expert, ChannelRepo channelRepo, Channel channel) {
 		this.expert = expert;
 		this.channelRepo = channelRepo;
 		this.channel = channel;
 		setTitle("View Nomination");
-		
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 353);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		
+
 		JLabel channelLabel = new JLabel("Please select a channel to view:");
 		JLabel reasonLabel = new JLabel("Please provide a reason if you reject the nomination:");
 		JLabel linkLabel = new JLabel("Channel Link:");
-		
+
 		nominatePane = new JEditorPane();
 		nominatePane.setEditable(false);
 		nominatePane.setText(channel.getNominateReason());
@@ -86,17 +82,17 @@ public class ReviewNomination extends JFrame {
 					channel.verify(false);
 					channel.review();
 					channelRepo.save(channel);
-					
+
 					showMessageDialog(null, "Successfully reject the nomination.", "Message", INFORMATION_MESSAGE);
-					
+
 					//View Nomination page is refreshed to show update, this window is then closed
 					vn.Refresh();
 					setVisible(false);
 					dispose();
-				} 
+				}
 			}
 		});
-		
+
 		//if approve channel, the details are saved into the database and user is notified
 		approveButton = new JButton("Approve");
 		approveButton.addMouseListener(new MouseAdapter() {
@@ -106,9 +102,9 @@ public class ReviewNomination extends JFrame {
 					channel.verify(true);
 					channel.review();
 					channelRepo.save(channel);
-					
+
 					showMessageDialog(null, "Successfully approve the nomination.", "Message", INFORMATION_MESSAGE);
-					
+
 					//View Nomination page is refreshed to show update, this window is then closed
 					vn.Refresh();
 					setVisible(false);
@@ -116,7 +112,7 @@ public class ReviewNomination extends JFrame {
 				}
 			}
 		});
-		
+
 		//a button that copies the link to the clipboard
 		copyButton = new JButton("Copy Link");
 		copyButton.addMouseListener(new MouseAdapter() {
@@ -150,10 +146,10 @@ public class ReviewNomination extends JFrame {
 
 			@Override
 			public void changedUpdate(DocumentEvent e) {
-				
+
 			}
 		});
-		
+
 		//Swing Layout
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(

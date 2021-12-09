@@ -26,14 +26,10 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JCheckBox;
 import javax.swing.JEditorPane;
 import javax.swing.JButton;
-/**
- * 
- * @author Allan Xie
- *
- */
+
 public class NominateChannel extends JFrame {
 	private ChannelRepo channelRepo;
-	
+
 	private JPanel contentPane;
 	private JCheckBox climateCheckBox;
 	private JCheckBox covidCheckBox;
@@ -48,34 +44,34 @@ public class NominateChannel extends JFrame {
 	private JEditorPane reasonPane;
 	private JEditorPane namePane;
 	private JButton nominateButton;
-	
+
 	public NominateChannel(ChannelRepo channelRepo) {
 		this.channelRepo = channelRepo;
-		
+
 		setTitle("Nominate Channel");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		
+
 		nameLabel = new JLabel("Channel Name:");
 		reasonLabel = new JLabel("Please provide your reason:");
 		linkLabel = new JLabel("Channel Link:");
 		categoryLabel = new JLabel("Please select corresponding categories:");
-		
+
 		climateCheckBox = new JCheckBox("Climate");
 		covidCheckBox = new JCheckBox("Covid19");
 		politicalCheckBox = new JCheckBox("Political");
 		religousCheckBox = new JCheckBox("Religous Extremism");
 		racialCheckBox = new JCheckBox("Racial Rrejudice");
-		
+
 		List<JCheckBox> listBox = new ArrayList<>(Arrays.asList(climateCheckBox, covidCheckBox, politicalCheckBox, religousCheckBox, racialCheckBox));
 
 		reasonPane = new JEditorPane();
 		linkPane = new JEditorPane();
 		namePane = new JEditorPane();
-		
+
 		//check whether all details are filled out, if so, save the channel to database
 		nominateButton = new JButton("Nominate");
 		nominateButton.addMouseListener(new MouseAdapter() {
@@ -111,7 +107,7 @@ public class NominateChannel extends JFrame {
 				//throw warning if any field is empty
 				if(namePane.getText().isEmpty()) {
 					showMessageDialog(null, "Please fill in the channel name", "Warning", ERROR_MESSAGE);
-				} 
+				}
 				else if(linkPane.getText().isEmpty()){
 					showMessageDialog(null, "Please fill in the channel link", "Warning", ERROR_MESSAGE);
 				}
@@ -202,5 +198,3 @@ public class NominateChannel extends JFrame {
 		contentPane.setLayout(gl_contentPane);
 	}
 }
-
-

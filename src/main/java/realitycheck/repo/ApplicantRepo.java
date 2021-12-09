@@ -1,8 +1,5 @@
 package realitycheck.repo;
 
-/**
- * @author Yuanqun Wang
- */
 import org.springframework.data.repository.CrudRepository;
 
 import realitycheck.model.Applicant;
